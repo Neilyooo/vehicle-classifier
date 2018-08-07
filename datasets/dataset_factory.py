@@ -22,7 +22,7 @@ from datasets import cifar10
 from datasets import flowers
 from datasets import imagenet
 from datasets import mnist
-
+from datasets import vehicle
 datasets_map = {
     'cifar10': cifar10,
     'flowers': flowers,
