@@ -41,7 +41,7 @@ if __name__ == '__main__':
         steps = int(epoch * (i+1)) #max steps
         print('**************    train   ******************')
         run = os.popen(train_cmd.format(**{'dataset_name':FLAGS.dataset_name, 'model_name':FLAGS.model_name, 'checkpoint_path':FLAGS.checkpoint_path,
-                                         'dataset_dir':FLAGS.dataset_dir, 'checkpoint_exclude_scopes':FLAGS.checkpoint_exclude_scopes
+                                         'dataset_dir':FLAGS.dataset_dir, 'checkpoint_exclude_scopes':FLAGS.checkpoint_exclude_scopes,
                                          'train_dir':FLAGS.train_dir, 'optimizer':FLAGS.optimizer, 'learning_rate':FLAGS.learning_rate,
                                          'clone_on_cpu':FLAGS.clone_on_cpu, 'batch_size':FLAGS.batch_size, 'max_number_of_steps':steps}))
         for line in run:
