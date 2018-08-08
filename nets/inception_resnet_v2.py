@@ -288,7 +288,7 @@ def inception_resnet_v2_base(inputs,
     raise ValueError('final_endpoint (%s) not recognized', final_endpoint)
 
 
-def inception_resnet_v2(inputs, num_classes=1001, is_training=True,
+def inception_resnet_v2(inputs, num_classes=764, is_training=True,
                         dropout_keep_prob=0.8,
                         reuse=None,
                         scope='InceptionResnetV2',
