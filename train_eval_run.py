@@ -12,11 +12,11 @@ def parse_args(check=True):
     parser.add_argument('--model_name', type=str, default='resnet_v2')#./slim/nets/
     parser.add_argument('--checkpoint_path', type=str)
     parser.add_argument('--dataset_dir', type=str)
-    parser.add_argument('--checkpoint_exclude_scopes', type=str)
+    parser.add_argument('--checkpoint_exclude_scopes', type=str，default='InceptionResnetV2/Logits,InceptionResnetV2/AuxLogits/Aux_logits')
     parser.add_argument('--train_dir', type=str)
     parser.add_argument('--optimizer', type=str, default='adam')#_configure_optimizer(line 273 in train_image_classifier.py)
     parser.add_argument('--learning_rate', type=float, default='0.01')
-    parser.add_argument('--clone_on_cpu', type=bool, default=False)#True on gpu
+    parser.add_argument('--clone_on_cpu', type=bool, default=False)#True on cpu
     parser.add_argument('--batch_size', type=int, default=32)
 
     parser.add_argument('--dataset_split_name', type=str, default='validation')
@@ -37,16 +37,25 @@ if __name__ == '__main__':
     os.chdir(w_d)
     #train a epoch
     epoch = 50000 // FLAGS.batch_size #epoch_size大概 1562steps
+    
+    if FLAGS.checkpoint_path:
+        ckpt = ' --checkpoint_path=' +FLAGS.checkpoint_path
+    else:
+        ckpt=''
     for i in range(40):#40*1562
         steps = int(epoch * (i+1)) #max steps
+        print('********************************************')
         print('**************    train   ******************')
+        print('********************************************')
         run = os.popen(train_cmd.format(**{'dataset_name':FLAGS.dataset_name, 'model_name':FLAGS.model_name, 'checkpoint_path':FLAGS.checkpoint_path,
                                          'dataset_dir':FLAGS.dataset_dir, 'checkpoint_exclude_scopes':FLAGS.checkpoint_exclude_scopes,
                                          'train_dir':FLAGS.train_dir, 'optimizer':FLAGS.optimizer, 'learning_rate':FLAGS.learning_rate,
-                                         'clone_on_cpu':FLAGS.clone_on_cpu, 'batch_size':FLAGS.batch_size, 'max_number_of_steps':steps}))
+                                         'clone_on_cpu':FLAGS.clone_on_cpu, 'batch_size':FLAGS.batch_size, 'max_number_of_steps':steps}) + ckpt)
         for line in run:
             print(run.strip())
+        print('*********************************************')
         print('**************    eval    *******************')
+        print('*********************************************')
         run = os.popen(eval_cmd.format(**{'dataset_name':FLAGS.dataset_name, 'dataset_dir':FLAGS.dataset_dir,
                                           'checkpoint_path': FLAGS.train_dir, 'model_name':FLAGS.model_name,
                                           'dataset_split_name': 'validation', 'batch_size':FLAGS.batch_size,
