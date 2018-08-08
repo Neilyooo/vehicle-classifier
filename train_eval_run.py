@@ -12,7 +12,7 @@ def parse_args(check=True):
     parser.add_argument('--model_name', type=str, default='resnet_v2')#./slim/nets/
     parser.add_argument('--checkpoint_path', type=str)
     parser.add_argument('--dataset_dir', type=str)
-    parser.add_argument('--checkpoint_exclude_scopes', type=str，default='InceptionResnetV2/Logits,InceptionResnetV2/AuxLogits/Aux_logits')
+    parser.add_argument('--checkpoint_exclude_scopes', type=str, default='InceptionResnetV2/Logits,InceptionResnetV2/AuxLogits/Aux_logits')
     parser.add_argument('--train_dir', type=str)
     parser.add_argument('--optimizer', type=str, default='adam')#_configure_optimizer(line 273 in train_image_classifier.py)
     parser.add_argument('--learning_rate', type=float, default='0.01')
